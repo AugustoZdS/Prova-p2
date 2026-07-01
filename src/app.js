@@ -2,6 +2,7 @@ const express = require('express');
 
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const petRoutes = require('./routes/petRoutes');
 
 const errorMiddleware = require(
   './middlewares/errorMiddleware'
@@ -10,6 +11,8 @@ const errorMiddleware = require(
 const app = express();
 
 app.use('/users', userRoutes);
+
+app.use('/pets', petRoutes);
 
 app.use('/', authRoutes);
 
