@@ -1,0 +1,233 @@
+@baseUrl = http://localhost:3000
+
+### Criar usuário adopter
+
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+"name": "João Silva",
+"email": "[joao@email.com](mailto:joao@email.com)",
+"password": "123456",
+"phone": "54999999999"
+}
+
+### Criar segundo usuário adopter
+
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+"name": "Maria Souza",
+"email": "[maria@email.com](mailto:maria@email.com)",
+"password": "123456",
+"phone": "54888888888"
+}
+
+### Tentar cadastrar email duplicado
+
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+"name": "João Silva",
+"email": "[joao@email.com](mailto:joao@email.com)",
+"password": "123456",
+"phone": "54999999999"
+}
+
+### LOGIN ADMIN
+
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+"email": "[admin@pets.com](mailto:admin@pets.com)",
+"password": "admin123"
+}
+
+### LOGIN ADOPTER
+
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+"email": "[joao@email.com](mailto:joao@email.com)",
+"password": "123456"
+}
+
+
+### PETS PÚBLICO
+
+### Ver pets disponíveis para adoção
+
+GET {{baseUrl}}/pets/available
+
+
+### PETS ADMIN
+
+### Listar pets
+
+GET {{baseUrl}}/pets
+Authorization: Bearer TOKEN_ADMIN
+
+### Cadastrar pet 1
+
+POST {{baseUrl}}/pets
+Authorization: Bearer TOKEN_ADMIN
+Content-Type: application/json
+
+{
+"name": "Rex",
+"age": 2,
+"species": "dog",
+"size": "medium",
+"description": "Muito dócil"
+}
+
+### Cadastrar pet 2
+
+POST {{baseUrl}}/pets
+Authorization: Bearer TOKEN_ADMIN
+Content-Type: application/json
+
+{
+"name": "Mingau",
+"age": 1,
+"species": "cat",
+"size": "small",
+"description": "Brincalhão"
+}
+
+### Buscar pet por id
+
+GET {{baseUrl}}/pets/1
+Authorization: Bearer TOKEN_ADMIN
+
+### Atualizar pet
+
+PUT {{baseUrl}}/pets/1
+Authorization: Bearer TOKEN_ADMIN
+Content-Type: application/json
+
+{
+"name": "Rex Atualizado",
+"age": 3,
+"species": "dog",
+"size": "large",
+"description": "Pet atualizado"
+}
+
+### Excluir pet disponível
+
+DELETE {{baseUrl}}/pets/2
+Authorization: Bearer TOKEN_ADMIN
+
+
+### USUÁRIOS ADMIN
+
+### Ver usuários cadastrados
+
+GET {{baseUrl}}/users
+Authorization: Bearer TOKEN_ADMIN
+
+### Ver usuário por id
+
+GET {{baseUrl}}/users/1
+Authorization: Bearer TOKEN_ADMIN
+
+### Atualizar usuário
+
+PUT {{baseUrl}}/users/1
+Authorization: Bearer TOKEN_ADMIN
+Content-Type: application/json
+
+{
+"name": "Administrador Atualizado",
+"email": "[admin@pets.com](mailto:admin@pets.com)",
+"phone": "54999999999"
+}
+
+
+### USUÁRIOS ADOPTER
+
+### Ver próprio perfil
+
+GET {{baseUrl}}/users/2
+Authorization: Bearer TOKEN_ADOPTER
+
+### Atualizar próprio perfil
+
+PUT {{baseUrl}}/users/2
+Authorization: Bearer TOKEN_ADOPTER
+Content-Type: application/json
+
+{
+"name": "João Atualizado",
+"email": "[joao@email.com](mailto:joao@email.com)",
+"phone": "54111111111"
+}
+
+
+### TESTE DE PERMISSÃO
+
+### Adopter tentando acessar outro perfil de usuário
+
+GET {{baseUrl}}/users/1
+Authorization: Bearer TOKEN_ADOPTER
+
+
+### ADOÇÃO
+
+### Adotar pet
+
+POST {{baseUrl}}/adoptions
+Authorization: Bearer TOKEN_ADOPTER
+Content-Type: application/json
+
+{
+"pet_id": 1
+}
+
+### Ver adoções
+
+GET {{baseUrl}}/adoptions
+Authorization: Bearer TOKEN_ADMIN
+
+
+### REGRAS DE NEGÓCIO
+
+### Tentar readotar pet
+
+POST {{baseUrl}}/adoptions
+Authorization: Bearer TOKEN_ADOPTER
+Content-Type: application/json
+
+{
+"pet_id": 1
+}
+
+### Tentar excluir pet adotado
+
+DELETE {{baseUrl}}/pets/1
+Authorization: Bearer TOKEN_ADMIN
+
+
+### AUTENTICAÇÃO
+
+### Token inválido
+
+GET {{baseUrl}}/users
+Authorization: Bearer TOKEN_INVALIDO
+
+### Sem token
+
+GET {{baseUrl}}/users
+
+
+# EXCLUSÃO DE USUÁRIO
+
+### Excluir usuário
+
+DELETE {{baseUrl}}/users/2
+Authorization: Bearer TOKEN_ADMIN
